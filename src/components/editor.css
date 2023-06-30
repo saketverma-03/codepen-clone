@@ -1,0 +1,13 @@
+.heading-editor{
+    background-color: black;
+    margin: none;
+}
+
+.heading-editor > h1 {
+    color: white;
+    font-size: .8rem;
+    margin: 0px;
+    background-color: brown;
+    width: fit-content;
+    padding: 2px; ;
+   }
