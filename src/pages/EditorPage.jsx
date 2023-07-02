@@ -13,6 +13,18 @@ const EditorPage = () => {
   const [sizes, setSizes] = useState([250, "auto"]);
   const [sizes1, setSizes1] = useState(["32%", "32%", "auto"]);
 
+  const [jsCode, setJsCode] = useState("");
+  const [htmlCode, setHtmlCode] = useState("<h1>saket</h1>");
+  const [cssCode, setCssCode] = useState("");
+
+  const srcDoc = `
+    <html>
+    <body>${htmlCode}</body>
+    <style>${cssCode}</style>
+    <script>${jsCode}</script>
+    </html>
+    `;
+
   const layoutCSS = {
     height: "100%",
     display: "flex",
@@ -21,16 +33,35 @@ const EditorPage = () => {
   };
 
   return (
-    <div style={{ height: 500 }}>
+    <div style={{ height: "100vh" }}>
       <SplitPane split="horizontal" sizes={sizes} onChange={setSizes}>
         <SplitPane sizes={sizes1} onChange={setSizes1}>
-          <Editor  className="editor-view" lang={html} />
-          <Editor  className="editor-view" lang={css} />
-          <Editor className="editor-view"  lang={javascript} />
+          <Editor
+            className="editor-view"
+            man={{ langState: htmlCode, setLangState: setHtmlCode }}
+            lang={html}
+          />
+          <Editor
+            className="editor-view"
+            man={{ langState: cssCode, setLangState: setCssCode }}
+            lang={css}
+          />
+          <Editor
+            className="editor-view"
+            man={{ langState: jsCode, setLangState: setJsCode }}
+            lang={javascript}
+          />
         </SplitPane>
 
-        <div style={{ ...layoutCSS, background: "#c0c3c6" }}>Bottom Pane1</div>
-        {/* </SplitPane> */}
+        <div className="frame-container">
+          <iframe
+            srcDoc={srcDoc}
+            title="Output"
+            sandbox="allow-scripts"
+            // frameBorder="0"
+            className="iframe-css"
+          />
+        </div>
       </SplitPane>
     </div>
   );
