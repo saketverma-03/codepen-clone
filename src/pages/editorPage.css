@@ -1,13 +1,18 @@
 .code-editor-page {
-    height: 100vh;
-    width: 100vw;
-    outline: none;
-    border: none;
-    background-color: rgb(26, 155, 155);
+  height: 100vh;
+  width: 100vw;
+  outline: none;
+  border: none;
+  background-color: rgb(26, 155, 155);
 }
 
-.editor-view{
-    min-width: 20px;
-    border-right:solid rgb(0, 0, 0) 2px;
+.editor-view {
+  min-width: 20px;
+  border-right: solid rgb(0, 0, 0) 2px;
 }
 
+iframe {
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
+}
