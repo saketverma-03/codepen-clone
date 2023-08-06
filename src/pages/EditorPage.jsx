@@ -1,68 +1,100 @@
-import { useState } from "react";
-import SplitPane from "split-pane-react";
 import "split-pane-react/esm/themes/default.css";
+// import Editor from "../components/Editor";
 import "./editorPage.css";
-import Editor from "../components/Editor";
 
-// mirror language modules
-import { javascript } from "@codemirror/lang-javascript";
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
+import CodeMirror from "@uiw/react-codemirror";
+
+// mirror language modules
+import { useCallback, useRef, useState } from "react";
+import useCode from "../hooks/useCode";
 
 const EditorPage = () => {
-  const [sizes, setSizes] = useState([250, "auto"]);
-  const [sizes1, setSizes1] = useState(["32%", "32%", "auto"]);
+  const [code, setCode, fsource] = useCode();
+  const [coords, setCoords] = useState({ "--width": "200px" });
+  const ref = useRef(null);
+  const widnowRef = useRef(null);
+  const [val, setVal] = useState(false);
 
-  const [jsCode, setJsCode] = useState("");
-  const [htmlCode, setHtmlCode] = useState("<h1>saket</h1>");
-  const [cssCode, setCssCode] = useState("");
+  const handleWindowMouseMove = useCallback((event) => {
+    console.log(event.clientX);
+    let newWid =
+      widnowRef.current.offsetWidth + (event.clientX - ref.current.offsetLeft);
+    setCoords({ "--width": `${newWid}px` });
+    newWid = null;
+  }, []);
 
-  const srcDoc = `
-    <html>
-    <body>${htmlCode}</body>
-    <style>${cssCode}</style>
-    <script>${jsCode}</script>
-    </html>
-    `;
+  const hadnleMouseDown = () => {
+    setVal(true);
+    window.addEventListener("mousemove", handleWindowMouseMove);
+  };
+  function hadnleMouseUp() {
+    setVal(false);
+    window.removeEventListener("mousemove", handleWindowMouseMove);
+  }
 
-  const layoutCSS = {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  const handleChange = (lang) => (e) => {
+    setCode({ ...code, [lang]: e });
   };
 
   return (
-    <div style={{ height: "100vh" }}>
-      <SplitPane split="horizontal" sizes={sizes} onChange={setSizes}>
-        <SplitPane sizes={sizes1} onChange={setSizes1}>
-          <Editor
-            className="editor-view"
-            man={{ langState: htmlCode, setLangState: setHtmlCode }}
-            lang={html}
-          />
-          <Editor
-            className="editor-view"
-            man={{ langState: cssCode, setLangState: setCssCode }}
-            lang={css}
-          />
-          <Editor
-            className="editor-view"
-            man={{ langState: jsCode, setLangState: setJsCode }}
-            lang={javascript}
-          />
-        </SplitPane>
-
-        <div className="frame-container">
-          <iframe
-            srcDoc={srcDoc}
-            title="Output"
-            sandbox="allow-scripts"
-            // frameBorder="0"
-            className="iframe-css"
-          />
-        </div>
-      </SplitPane>
+    <div className="editor-container">
+      <div
+        ref={widnowRef}
+        style={coords}
+        onMouseUp={hadnleMouseUp}
+        className="editorpan"
+      >
+        <CodeMirror
+          value={code.html}
+          height="100vh"
+          theme={"dark"}
+          extensions={[html()]}
+          className="editor-view"
+          onChange={handleChange("html")}
+        />
+        <CodeMirror
+          value={code.css}
+          height="100vh"
+          theme={"dark"}
+          extensions={[css()]}
+          className="editor-view"
+          onChange={handleChange("css")}
+        />
+        <CodeMirror
+          value={code.javascript}
+          height="100vh"
+          theme={"dark"}
+          extensions={[javascript()]}
+          className="editor-view"
+          onChange={handleChange("javascript")}
+        />
+      </div>
+      <div
+        ref={ref}
+        className="handle"
+        onMouseDown={hadnleMouseDown}
+        onMouseUp={hadnleMouseUp}
+      ></div>
+      <div
+        className="frame"
+        onMouseUp={hadnleMouseUp}
+        onMouseDown={hadnleMouseDown}
+      >
+        {/* <iframe
+        // srcDoc={source}
+        // title="Output"
+        // sandbox="allow-scripts"
+        ></iframe> */}
+        <iframe
+          className={val ? "hide" : ""}
+          // src="https://www.google.com/search?client=firefox-b-d&q=yi"
+          srcDoc={fsource}
+          frameBorder="0"
+        ></iframe>
+      </div>
     </div>
   );
 };

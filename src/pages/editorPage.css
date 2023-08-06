@@ -1,18 +1,39 @@
-.code-editor-page {
+/* .code-editor-page {
   height: 100vh;
   width: 100vw;
   outline: none;
   border: none;
   background-color: rgb(26, 155, 155);
+} */
+
+.editor-container {
+  display: flex;
+  flex-direction: row;
 }
 
-.editor-view {
-  min-width: 20px;
-  border-right: solid rgb(0, 0, 0) 2px;
+.editorpan {
+  height: 100vh;
+  width: var(--width);
 }
-
+.handle {
+  width: 10px;
+  height: 100vh;
+  background-color: black;
+}
+.handle:hover {
+  background-color: rgb(31, 31, 31);
+  /* scale: 1.1; */
+}
+.frame {
+  flex-grow: 4;
+  height: 100vh;
+  background-color: aquamarine;
+}
 iframe {
-  width: 100vw;
-  min-height: 100vh;
-  height: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.hide {
+  visibility: hidden;
 }
