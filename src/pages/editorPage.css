@@ -19,6 +19,7 @@
   width: 10px;
   height: 100vh;
   background-color: black;
+  cursor: col-resize;
 }
 .handle:hover {
   background-color: rgb(31, 31, 31);
@@ -27,7 +28,6 @@
 .frame {
   flex-grow: 4;
   height: 100vh;
-  background-color: aquamarine;
 }
 iframe {
   width: 100%;
@@ -36,4 +36,28 @@ iframe {
 
 .hide {
   visibility: hidden;
+}
+
+.tab {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  cursor: pointer;
+}
+.tab li {
+  padding: 10px;
+  background-color: #03203c;
+  color: white;
+  border: 1px solid #005c86;
+  padding-right: 30px;
+  border-top: solid 2px #005c86;
+}
+.tab li:hover {
+  background-color: #09335a;
+}
+.tab li.selected {
+  border-top: solid 2px #eb4d4b;
+  /* border-color: red; */
 }

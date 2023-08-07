@@ -17,6 +17,7 @@ const EditorPage = () => {
   const ref = useRef(null);
   const widnowRef = useRef(null);
   const [val, setVal] = useState(false);
+  const [currentView, setCurrentView] = useState("html");
 
   const handleWindowMouseMove = useCallback((event) => {
     console.log(event.clientX);
@@ -35,10 +36,6 @@ const EditorPage = () => {
     window.removeEventListener("mousemove", handleWindowMouseMove);
   }
 
-  const handleChange = (lang) => (e) => {
-    setCode({ ...code, [lang]: e });
-  };
-
   return (
     <div className="editor-container">
       <div
@@ -47,30 +44,27 @@ const EditorPage = () => {
         onMouseUp={hadnleMouseUp}
         className="editorpan"
       >
-        <CodeMirror
-          value={code.html}
-          height="100vh"
-          theme={"dark"}
-          extensions={[html()]}
-          className="editor-view"
-          onChange={handleChange("html")}
-        />
-        <CodeMirror
-          value={code.css}
-          height="100vh"
-          theme={"dark"}
-          extensions={[css()]}
-          className="editor-view"
-          onChange={handleChange("css")}
-        />
-        <CodeMirror
-          value={code.javascript}
-          height="100vh"
-          theme={"dark"}
-          extensions={[javascript()]}
-          className="editor-view"
-          onChange={handleChange("javascript")}
-        />
+        <ul className="tab">
+          <li
+            className={`${currentView === "html" ? "selected" : ""}`}
+            onClick={() => setCurrentView("html")}
+          >
+            html
+          </li>
+          <li
+            className={`${currentView === "css" ? "selected" : ""}`}
+            onClick={() => setCurrentView("css")}
+          >
+            css
+          </li>
+          <li
+            className={`${currentView === "js" ? "selected" : ""}`}
+            onClick={() => setCurrentView("js")}
+          >
+            js
+          </li>
+        </ul>
+        <EditorView code={code} setCode={setCode} selected={currentView} />
       </div>
       <div
         ref={ref}
@@ -97,6 +91,47 @@ const EditorPage = () => {
       </div>
     </div>
   );
+};
+
+const EditorView = ({ code, setCode, selected }) => {
+  const handleChange = (lang) => (e) => {
+    setCode({ ...code, [lang]: e });
+  };
+
+  if (selected === "html")
+    return (
+      <CodeMirror
+        value={code.html}
+        height="100vh"
+        theme={"dark"}
+        extensions={[html()]}
+        className="editor-view"
+        onChange={handleChange("html")}
+      />
+    );
+  if (selected === "css")
+    return (
+      <CodeMirror
+        value={code.css}
+        height="100vh"
+        theme={"dark"}
+        extensions={[css()]}
+        className="editor-view"
+        onChange={handleChange("css")}
+      />
+    );
+
+  if (selected === "js")
+    return (
+      <CodeMirror
+        value={code.javascript}
+        height="100vh"
+        theme={"dark"}
+        extensions={[javascript()]}
+        className="editor-view"
+        onChange={handleChange("javascript")}
+      />
+    );
 };
 
 export default EditorPage;
