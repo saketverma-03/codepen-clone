@@ -1,6 +1,6 @@
 import "split-pane-react/esm/themes/default.css";
 // import Editor from "../components/Editor";
-import "./editorPage.css";
+import "./scss/editorPage.scss";
 
 import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
@@ -64,7 +64,14 @@ const EditorPage = () => {
             js
           </li>
         </ul>
-        <EditorView code={code} setCode={setCode} selected={currentView} />
+        <div className="test">
+          <EditorView
+            // className="test"
+            code={code}
+            setCode={setCode}
+            selected={currentView}
+          />
+        </div>
       </div>
       <div
         ref={ref}
@@ -102,7 +109,7 @@ const EditorView = ({ code, setCode, selected }) => {
     return (
       <CodeMirror
         value={code.html}
-        height="100vh"
+        // height="100%
         theme={"dark"}
         extensions={[html()]}
         className="editor-view"
@@ -113,7 +120,7 @@ const EditorView = ({ code, setCode, selected }) => {
     return (
       <CodeMirror
         value={code.css}
-        height="100vh"
+        // height="100vh"
         theme={"dark"}
         extensions={[css()]}
         className="editor-view"
@@ -125,7 +132,7 @@ const EditorView = ({ code, setCode, selected }) => {
     return (
       <CodeMirror
         value={code.javascript}
-        height="100vh"
+        // height="100vh"
         theme={"dark"}
         extensions={[javascript()]}
         className="editor-view"
