@@ -6,7 +6,7 @@
   flex-direction: column;
 
   nav {
-    background-color: #8b5cf6;
+    background-color: var(--primary);
     display: flex;
     justify-content: flex-end;
     padding: 0.2rem;
@@ -16,10 +16,10 @@
       align-self: flex-end;
       border: solid 1px transparent;
       outline: transparent;
-      color: white;
+      color: var(--font);
       border-radius: 0.2rem;
       &:hover {
-        background-color: #991b1bb6;
+        background-color: var(--red-400);
       }
     }
   }
@@ -30,17 +30,16 @@
     flex-grow: 1;
     gap: 0.5rem;
     padding: 1rem;
-    background-color: #262626;
+    background-color: var(--bg);
     align-content: flex-start;
   }
   .card {
-    background-color: red;
     height: 12rem;
     width: 12rem;
     border-radius: 0.4em;
     padding: 0.5em;
-    background-color: #0a0a0a;
-    color: white;
+    background-color: var(--bg-300);
+    color: var(--font);
     display: flex;
     flex-direction: column;
     user-select: none;
@@ -48,13 +47,13 @@
     transition: all 0.1s ease;
 
     &:hover {
-      border-color: #7c3aed;
-      box-shadow: 0 0 2px #7c3aed;
+      border-color: var(--primary);
+      box-shadow: 0 0 2px (--primary);
     }
 
     h2 {
       //   font-size: 1em;
-      border-bottom: solid 1px white;
+      border-bottom: solid 1px var(--font-300);
       margin: 0px;
     }
     p {
@@ -73,8 +72,8 @@
       //   font-size: 0.6em;
       padding: 0.4rem 0.7rem;
       border-radius: 0.4em;
-      color: white;
-      background-color: #dc2626;
+      color: var(--font);
+      background-color: var(--red-300);
       //   border: solid 2px transparent;
       border: none;
 
@@ -116,12 +115,12 @@
   height: fit-content;
   width: 70vw;
   max-width: 1200px;
-  color: white;
+  color: var(--font);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #0a0a0a;
-  border: solid 2px #7c3aed;
+  background-color: var(--bg-300);
+  border: solid 2px var(--primary);
   padding: 1.2rem;
   z-index: 1;
   &.hidden {
@@ -129,10 +128,11 @@
   }
   input,
   textarea {
-    background-color: #0a0a0a;
-    color: white;
-    font-size: 1.2rem;
-
+    background-color: var(--bg-200);
+    color: var(--font);
+    font-size: 1rem;
+    outline: transparent;
+    border: solid 1px var(--font-300);
     width: 100%;
     margin-bottom: 1rem;
   }

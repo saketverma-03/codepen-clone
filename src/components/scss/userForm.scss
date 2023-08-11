@@ -11,20 +11,22 @@ form {
   input[type="email"],
   input[type="password"] {
     padding: 0.5rem 1rem;
-    border: solid 2px #bdbcbb;
+    border: solid 2px var(--primary-100);
     border-radius: 3px;
     outline: transparent;
     margin-bottom: 10px;
     margin-top: 0.3rem;
     border-radius: 6px;
     font-size: 1.1rem;
+    background-color: var(--bg-300);
+    color: var(--font);
     &:focus {
-      border-color: #6d28d9;
+      border-color: var(--primary);
       box-shadow: 0 0 2px #6d28d9;
     }
   }
   input[type="submit"] {
-    background-color: #8b5cf6;
+    background-color: var(--primary);
     color: antiquewhite;
     font-weight: bold;
 
@@ -34,10 +36,10 @@ form {
     border-radius: 6px;
 
     &:hover {
-      background-color: #2e1065;
+      background-color: var(--primary-400);
     }
     &:active {
-      background-color: #4c1d95;
+      background-color: var(--primary-100);
     }
   }
   a {

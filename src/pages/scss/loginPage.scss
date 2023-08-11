@@ -29,25 +29,30 @@
     // justify-content: space-around;
     padding: 0;
     width: 100%;
-    border: solid 3px #8b5cf6;
+    border: solid 3px var(--primary);
+    background-color: var(--primary);
+
     border-radius: 6px;
   }
   li {
-    background-color: #8b5cf6;
+    background-color: var(--primary);
     color: white;
     font-weight: bold;
     width: 100%;
     text-align: center;
     padding: 1rem;
     cursor: pointer;
+    border-radius: 6px;
 
     &:hover {
       // #2e1065
-      background-color: #7c3aed;
+      background-color: var(--primary-300);
+      border-radius: 0px;
+
       // background-color: #4c1d95;
     }
     &.selected {
-      background-color: #3730a3;
+      background-color: var(--primary-400);
     }
   }
 }
