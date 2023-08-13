@@ -22,7 +22,7 @@ export const routes = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: "/editor",
+    path: "/editor/:projectId",
     element: (
       <AuthanticatedRoute>
         <EditorPage />
