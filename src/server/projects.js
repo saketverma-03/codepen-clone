@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 // Creat a project
-export async function createProject(id, token, project) {
+export async function createProject(id, project) {
   const params = {
     method: "post",
     url: `${basturl}/projects/createOne`,
@@ -22,10 +22,23 @@ export async function createProject(id, token, project) {
 // delete a project
 
 // getALlProjects
-export async function getAllProjects(id, token) {
+export async function getAllProjects(id) {
   const params = {
     method: "get",
-    url: `${basturl}/getAllUsers/${id}`,
+    url: `${basturl}/getAll/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const res = await axios(params);
+  return { data: res.data, message: res.message };
+}
+
+// getALlProjects
+export async function getOneProject(id) {
+  const params = {
+    method: "get",
+    url: `${basturl}/getOne/${id}`,
     headers: {
       "Content-Type": "application/json",
     },

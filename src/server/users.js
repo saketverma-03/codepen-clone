@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { authanticate } from "./util";
 const basturl = "http://localhost:3001/api/user/signup";
 axios.defaults.withCredentials = true;
@@ -46,3 +47,7 @@ export async function test() {
 
   return await axios(requestProps);
 }
+
+export const logout = () => {
+  Cookies.remove("token");
+};

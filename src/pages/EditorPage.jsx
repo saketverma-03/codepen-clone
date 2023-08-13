@@ -1,4 +1,3 @@
-import "split-pane-react/esm/themes/default.css";
 // import Editor from "../components/Editor";
 import "./scss/editorPage.scss";
 

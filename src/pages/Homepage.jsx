@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useAuthantication from "../hooks/useAuthantication";
+import { createProject, getOneProject } from "../server/projects";
+import { logout, test } from "../server/users";
 import "./scss/Homepage.scss";
+
+function getProjectList() {
+  // getOneProject()
+}
 
 function Homepage() {
   const [formHidden, setFormHidden] = useState(true);
   const [projects, setProjects] = useState([]);
+  const [user] = useAuthantication();
 
-  //  useEffects loadProjects
-  // onClickNavigate to editor/xxxxxid
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
   return (
     <>
       <CreateProjectForm hidden={{ get: formHidden, set: setFormHidden }} />
       <div className="home-container">
         <nav>
-          <button>logout</button>
+          <button onClick={() => logout()}>logout</button>
         </nav>
         <div className="body">
           <div className="head">
@@ -57,10 +66,26 @@ function ProjectCard({ id, title, discription }) {
 }
 
 function CreateProjectForm({ hidden }) {
-  function handleSubmit(e) {
+  const [inputs, setInputs] = useState({ title: "", discription: "" });
+  const [user, id] = useAuthantication();
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    window.alert("Submiting Form");
+    try {
+      const newProject = await createProject(id, {
+        title: inputs.title,
+        discription: inputs.discription,
+      });
+      console.log(newProject);
+      window.alert("Created Project Succeffulty");
+    } catch (e) {
+      console.error(e);
+      console.error("errorMessage", e.message);
+    }
   }
+  const handleInputs = (name) => (e) => {
+    setInputs({ ...inputs, [name]: e.target.value });
+  };
   return (
     <form
       onSubmit={handleSubmit}
@@ -77,10 +102,21 @@ function CreateProjectForm({ hidden }) {
         <label htmlFor="title">Name Of Project</label>
       </h2>
       <h3>
-        <input type="text" id="title" />
+        <input
+          type="text"
+          id="title"
+          required
+          placeholder="My_App"
+          onChange={handleInputs("title")}
+        />
       </h3>
-      <label htmlFor="dedtails">Descrbe your project (optional)</label>
-      <textarea id="dedtails" cols="20" rows="5"></textarea>
+      <label htmlFor="discription">Descrbe your project (optional)</label>
+      <textarea
+        id="discription"
+        cols="20"
+        rows="5"
+        onChange={handleInputs("discription")}
+      />
       <input type="submit" />
     </form>
   );

@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export function isAuthanticated() {
   if (typeof window == "undefined") {
     return false;
@@ -8,10 +10,7 @@ export function isAuthanticated() {
   return false;
 }
 
-export function authanticate(data, next) {
-  if (typeof window !== "undefined") {
-    // localStorage.setItem("jwt", data.token);
-    localStorage.setItem("id", data.id);
-    next();
-  }
+export function authanticate(data) {
+  Cookies.set("id", data);
+  // next();
 }

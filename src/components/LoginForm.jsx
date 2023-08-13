@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
+import useAuthantication from "../hooks/useAuthantication";
 import { userSignin } from "../server/users";
 import { authanticate } from "../server/util";
 import "./scss/userForm.scss";
@@ -10,18 +11,30 @@ function LoginForm(params) {
     password: "",
   });
   const nav = useNavigate();
+
+  const [user] = useAuthantication();
   /* Redirect on Soccesfull login */
   // Login Functinality
-  function success() {
-    return nav("/editor", { replace: true });
-  }
+  useEffect(
+    function () {
+      if (user) nav("/home");
+    },
+    [user]
+  );
+
+  const success = useCallback(() => {
+    return nav("/home");
+  }, []);
+
   async function handleSubit(e) {
     e.preventDefault();
     try {
       const res = await userSignin(inputs);
       const { data } = res;
       console.log("Data", data);
-      authanticate(data, success);
+      authanticate(data);
+      success();
+      // authanticate(data);
     } catch (e) {
       console.log("ERROR SIGNING IN");
       console.log(e);
