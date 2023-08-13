@@ -1,9 +1,11 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import EditorView from "../components/EditorView";
 
 import useCode from "../hooks/useCode";
 
+import { useParams } from "react-router-dom";
+import NavBar from "../components/NavBar";
 import "./scss/editorPage.scss";
 
 const EditorPage = () => {
@@ -13,8 +15,13 @@ const EditorPage = () => {
   const [windowWidth, setWindowWidth] = useState({ "--width": "200px" });
   const [hidden, setHidden] = useState(false);
   const [currentView, setCurrentView] = useState("html");
+  const [full, setFull] = useState(false);
 
   const [code, setCode, fsource] = useCode();
+
+  const { projectId } = useParams();
+
+  useEffect(() => console.log(projectId), []);
 
   const handleWindowMouseMove = useCallback((event) => {
     /* Calculate new width */
@@ -38,6 +45,7 @@ const EditorPage = () => {
 
   return (
     <div className="editor-container">
+      <NavBar full={() => setFull(!full)} />
       {/* Pannel 1 */}
       <div
         ref={editorRef}
@@ -85,7 +93,7 @@ const EditorPage = () => {
       ></div>
       {/* Pannel-2  */}
       <div
-        className="frame"
+        className={`frame  ${full ? "full-screen" : ""}`}
         onMouseUp={hadnleMouseUp}
         onMouseDown={hadnleMouseDown}
       >
