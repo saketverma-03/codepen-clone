@@ -1,48 +1,51 @@
-// import Editor from "../components/Editor";
-import "./scss/editorPage.scss";
-
-import { css } from "@codemirror/lang-css";
-import { html } from "@codemirror/lang-html";
-import { javascript } from "@codemirror/lang-javascript";
-import CodeMirror from "@uiw/react-codemirror";
-
-// mirror language modules
 import { useCallback, useRef, useState } from "react";
+
+import EditorView from "../components/EditorView";
+
 import useCode from "../hooks/useCode";
 
+import "./scss/editorPage.scss";
+
 const EditorPage = () => {
-  const [code, setCode, fsource] = useCode();
-  const [coords, setCoords] = useState({ "--width": "200px" });
-  const ref = useRef(null);
-  const widnowRef = useRef(null);
-  const [val, setVal] = useState(false);
+  const handleRef = useRef(null);
+  const editorRef = useRef(null);
+
+  const [windowWidth, setWindowWidth] = useState({ "--width": "200px" });
+  const [hidden, setHidden] = useState(false);
   const [currentView, setCurrentView] = useState("html");
 
+  const [code, setCode, fsource] = useCode();
+
   const handleWindowMouseMove = useCallback((event) => {
-    console.log(event.clientX);
+    /* Calculate new width */
     let newWid =
-      widnowRef.current.offsetWidth + (event.clientX - ref.current.offsetLeft);
-    setCoords({ "--width": `${newWid}px` });
+      editorRef.current.offsetWidth +
+      (event.clientX - handleRef.current.offsetLeft);
+
+    setWindowWidth({ "--width": `${newWid}px` });
     newWid = null;
   }, []);
 
   const hadnleMouseDown = () => {
-    setVal(true);
+    setHidden(true);
     window.addEventListener("mousemove", handleWindowMouseMove);
   };
+
   function hadnleMouseUp() {
-    setVal(false);
+    setHidden(false);
     window.removeEventListener("mousemove", handleWindowMouseMove);
   }
 
   return (
     <div className="editor-container">
+      {/* Pannel 1 */}
       <div
-        ref={widnowRef}
-        style={coords}
+        ref={editorRef}
+        style={windowWidth}
         onMouseUp={hadnleMouseUp}
         className="editorpan"
       >
+        {/* Tabs */}
         <ul className="tab">
           <li
             className={`${currentView === "html" ? "selected" : ""}`}
@@ -63,6 +66,7 @@ const EditorPage = () => {
             js
           </li>
         </ul>
+        {/* Editor */}
         <div className="test">
           <EditorView
             // className="test"
@@ -72,72 +76,27 @@ const EditorPage = () => {
           />
         </div>
       </div>
+      {/* divider between pannels */}
       <div
-        ref={ref}
+        ref={handleRef}
         className="handle"
         onMouseDown={hadnleMouseDown}
         onMouseUp={hadnleMouseUp}
       ></div>
+      {/* Pannel-2  */}
       <div
         className="frame"
         onMouseUp={hadnleMouseUp}
         onMouseDown={hadnleMouseDown}
       >
-        {/* <iframe
-        // srcDoc={source}
-        // title="Output"
-        // sandbox="allow-scripts"
-        ></iframe> */}
         <iframe
-          className={val ? "hide" : ""}
-          // src="https://www.google.com/search?client=firefox-b-d&q=yi"
+          className={hidden ? "hide" : ""}
           srcDoc={fsource}
           frameBorder="0"
         ></iframe>
       </div>
     </div>
   );
-};
-
-const EditorView = ({ code, setCode, selected }) => {
-  const handleChange = (lang) => (e) => {
-    setCode({ ...code, [lang]: e });
-  };
-
-  if (selected === "html")
-    return (
-      <CodeMirror
-        value={code.html}
-        // height="100%
-        theme={"dark"}
-        extensions={[html()]}
-        className="editor-view"
-        onChange={handleChange("html")}
-      />
-    );
-  if (selected === "css")
-    return (
-      <CodeMirror
-        value={code.css}
-        // height="100vh"
-        theme={"dark"}
-        extensions={[css()]}
-        className="editor-view"
-        onChange={handleChange("css")}
-      />
-    );
-
-  if (selected === "js")
-    return (
-      <CodeMirror
-        value={code.javascript}
-        // height="100vh"
-        theme={"dark"}
-        extensions={[javascript()]}
-        className="editor-view"
-        onChange={handleChange("javascript")}
-      />
-    );
 };
 
 export default EditorPage;
