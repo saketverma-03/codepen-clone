@@ -13,10 +13,12 @@ function Homepage() {
   const [formHidden, setFormHidden] = useState(true);
   const [projects, setProjects] = useState([]);
   const [user] = useAuthantication();
+  const nav = useNavigate();
 
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
+  function Logout() {
+    logout();
+    nav("../");
+  }
 
   return (
     <>
@@ -24,7 +26,7 @@ function Homepage() {
       <div className="home-container">
         <nav>
           <ul className="floating-nav u-ul">
-            <li className="btn-logout" onClick={() => logout()}>
+            <li className="btn-logout" onClick={Logout}>
               logout
             </li>
           </ul>

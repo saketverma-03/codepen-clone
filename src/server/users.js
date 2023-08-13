@@ -50,4 +50,5 @@ export async function test() {
 
 export const logout = () => {
   Cookies.remove("token");
+  Cookies.remove("id");
 };
