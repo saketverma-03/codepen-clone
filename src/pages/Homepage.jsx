@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuthantication from "../hooks/useAuthantication";
 import { createProject, getOneProject } from "../server/projects";
 import { logout, test } from "../server/users";
@@ -22,7 +23,11 @@ function Homepage() {
       <CreateProjectForm hidden={{ get: formHidden, set: setFormHidden }} />
       <div className="home-container">
         <nav>
-          <button onClick={() => logout()}>logout</button>
+          <ul className="floating-nav u-ul">
+            <li className="btn-logout" onClick={() => logout()}>
+              logout
+            </li>
+          </ul>
         </nav>
         <div className="body">
           <div className="head">
@@ -68,24 +73,30 @@ function ProjectCard({ id, title, discription }) {
 function CreateProjectForm({ hidden }) {
   const [inputs, setInputs] = useState({ title: "", discription: "" });
   const [user, id] = useAuthantication();
+  const nav = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
       const newProject = await createProject(id, {
         title: inputs.title,
         discription: inputs.discription,
       });
-      console.log(newProject);
-      window.alert("Created Project Succeffulty");
+
+      console.log(newProject.data.newProject.id);
+      nav(`../editor/${newProject.data.newProject.id}`);
+      // window.alert("Created Project Succeffulty");
     } catch (e) {
       console.error(e);
       console.error("errorMessage", e.message);
     }
   }
+
   const handleInputs = (name) => (e) => {
     setInputs({ ...inputs, [name]: e.target.value });
   };
+
   return (
     <form
       onSubmit={handleSubmit}
