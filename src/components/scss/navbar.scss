@@ -1,0 +1,39 @@
+.floating-nav {
+  height: fit-content;
+  width: fit-content;
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 4;
+  color: var(--font-100);
+  display: flex;
+  background-color: var(--bg-300);
+  //   top: -10%;
+  right: 1%;
+  top: 2%;
+  user-select: none;
+  li {
+    padding: 0.5rem;
+    // padding: 2px;
+    // z-index: 6;
+    cursor: pointer;
+    display: flex;
+    &:hover {
+      background-color: var(--bg-100);
+    }
+    &:active {
+      background-color: var(--bg-200);
+    }
+    svg {
+      align-self: center;
+    }
+  }
+  .btn-logout {
+    background-color: var(--red-400);
+    &:hover {
+      background-color: var(--red-300);
+    }
+    &:active {
+      background-color: var(--red-200);
+    }
+  }
+}
