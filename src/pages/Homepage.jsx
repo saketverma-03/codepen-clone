@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthantication from "../hooks/useAuthantication";
-import { createProject, getOneProject } from "../server/projects";
+import {
+  createProject,
+  getAllProjects,
+  getOneProject,
+} from "../server/projects";
 import { logout, test } from "../server/users";
 import "./scss/Homepage.scss";
 
@@ -14,6 +18,24 @@ function Homepage() {
   const [projects, setProjects] = useState([]);
   const [user] = useAuthantication();
   const nav = useNavigate();
+
+  const getALl = async () => {
+    try {
+      const res = await getAllProjects();
+      // console.log(res.data.porjects);
+      setProjects(res.data.projects);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getALl();
+  }, []);
+  // useEffect(async () => {
+
+  //   })();
+  // }, []);
 
   function Logout() {
     logout();
@@ -40,13 +62,13 @@ function Homepage() {
               <h2>Create New Thing</h2>
             </div>
           </div>
-          {projects.forEach((project) => {
+          {projects.map((project) => {
             return (
               <ProjectCard
                 key={project.id}
                 id={project.id}
                 title={project.title}
-                discription=""
+                discription={project.discription}
               />
             );
           })}
@@ -59,16 +81,17 @@ function Homepage() {
 export default Homepage;
 
 function ProjectCard({ id, title, discription }) {
-  discription = "";
   return (
-    <div className="card">
-      <h2>{title}</h2>
-      <span></span>
-      <p>{discription}</p>
-      <div className="footer">
-        <button className="delete">Delete</button>
+    <Link to={`../editor/${id}`}>
+      <div className="card">
+        <h2>{title}</h2>
+        <span></span>
+        <p>{discription}</p>
+        <div className="footer">
+          <button className="delete">Delete</button>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
