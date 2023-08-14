@@ -6,6 +6,7 @@ import useCode from "../hooks/useCode";
 
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { getOneProject, updateOneProjectCode } from "../server/projects";
 import "./scss/editorPage.scss";
 
 const EditorPage = () => {
@@ -43,9 +44,35 @@ const EditorPage = () => {
     window.removeEventListener("mousemove", handleWindowMouseMove);
   }
 
+  async function handleSave() {
+    try {
+      const res = await updateOneProjectCode(code, projectId);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async function handleLoad() {
+    try {
+      const res = await getOneProject(projectId);
+      setCode({
+        html: res.data.project.html,
+        css: res.data.project.css,
+        js: res.data.project.js,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    handleLoad();
+  }, []);
+
   return (
     <div className="editor-container">
-      <NavBar full={() => setFull(!full)} />
+      <NavBar full={() => setFull(!full)} onSave={handleSave} />
       {/* Pannel 1 */}
       <div
         ref={editorRef}

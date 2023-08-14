@@ -1,7 +1,7 @@
 import { BsArrowsFullscreen } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import "./scss/navbar.scss";
-function NavBar({ full }) {
+function NavBar({ full, onSave }) {
   const nav = useNavigate();
   return (
     <>
@@ -10,7 +10,7 @@ function NavBar({ full }) {
           <BsArrowsFullscreen />
         </li>
         <li onClick={() => nav("../home")}>Home</li>
-        <li>save</li>
+        <li onClick={onSave}>save</li>
       </ul>
     </>
   );
