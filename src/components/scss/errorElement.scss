@@ -1,0 +1,13 @@
+.error-conainer {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  a {
+    color: var(--font);
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--primary-400);
+  }
+}

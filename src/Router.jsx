@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, createBrowserRouter, useNavigate } from "react-router-dom";
 import "./App.css";
+import ErrorElement from "./components/ErrorElement";
 import useAuthantication from "./hooks/useAuthantication";
 import EditorPage from "./pages/EditorPage";
 import Homepage from "./pages/Homepage";
@@ -20,6 +21,7 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <LoginPage />,
+    errorElement: <ErrorElement />,
   },
   {
     path: "/editor/:projectId",
