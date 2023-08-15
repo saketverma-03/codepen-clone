@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Navigate, createBrowserRouter, useNavigate } from "react-router-dom";
 import "./App.css";
 import ErrorElement from "./components/ErrorElement";
 import useAuthantication from "./hooks/useAuthantication";
-import EditorPage from "./pages/EditorPage";
+// import EditorPage from "./pages/EditorPage";
 import Homepage from "./pages/Homepage";
 import LoginPage from "./pages/LoginPage";
 import { isAuthanticated } from "./server/util";
+
+const EditorPage = lazy(() => import("./pages/EditorPage"));
 
 function AuthanticatedRoute({ children }) {
   const [user] = useAuthantication();
@@ -26,9 +28,11 @@ export const routes = createBrowserRouter([
   {
     path: "/editor/:projectId",
     element: (
-      <AuthanticatedRoute>
-        <EditorPage />
-      </AuthanticatedRoute>
+      <Suspense fallback={<h1>Loading</h1>}>
+        <AuthanticatedRoute>
+          <EditorPage />
+        </AuthanticatedRoute>
+      </Suspense>
     ),
   },
   {

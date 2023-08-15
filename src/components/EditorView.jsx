@@ -2,6 +2,7 @@ import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
+import "./scss/editorView.scss";
 
 /* Returs codeeditor depending on selected value */
 const EditorView = ({ code, setCode, selected }) => {
@@ -11,14 +12,16 @@ const EditorView = ({ code, setCode, selected }) => {
 
   if (selected === "html")
     return (
-      <CodeMirror
-        value={code.html}
-        // height="100%
-        theme={"dark"}
-        extensions={[html()]}
-        className="editor-view"
-        onChange={handleChange("html")}
-      />
+      <>
+        <CodeMirror
+          value={code.html}
+          // height="100%
+          theme={"dark"}
+          extensions={[html()]}
+          className="editor-view"
+          onChange={handleChange("html")}
+        />
+      </>
     );
   if (selected === "css")
     return (

@@ -17,7 +17,7 @@ function ThemeProvider({ children }) {
 
   console.log(theme);
   return (
-    <div className="body" data-theme={"light"}>
+    <div className="body" data-theme={"dark"}>
       {children}
     </div>
   );

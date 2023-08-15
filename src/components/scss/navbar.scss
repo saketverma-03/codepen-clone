@@ -26,6 +26,13 @@
     svg {
       align-self: center;
     }
+
+    &.divider {
+      padding: 0px;
+      width: 1px;
+      // margin: 8px 0px;
+      background-color: rgb(0, 127, 247);
+    }
   }
   .btn-logout {
     background-color: var(--red-400);
@@ -36,4 +43,8 @@
       background-color: var(--red-200);
     }
   }
+}
+
+.editor-btn {
+  position: relative;
 }

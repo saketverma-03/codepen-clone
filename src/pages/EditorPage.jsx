@@ -44,6 +44,10 @@ const EditorPage = () => {
     window.removeEventListener("mousemove", handleWindowMouseMove);
   }
 
+  const [fontSize, setFontSize] = useState({ "--width": "1rem" });
+  // function handleFontChange(size){
+  //   set
+  // }
   async function handleSave() {
     try {
       const res = await updateOneProjectCode(code, projectId);
@@ -101,6 +105,7 @@ const EditorPage = () => {
             js
           </li>
         </ul>
+
         {/* Editor */}
         <div className="test">
           <EditorView
