@@ -17,12 +17,17 @@ const EditorPage = () => {
   const [hidden, setHidden] = useState(false);
   const [currentView, setCurrentView] = useState("html");
   const [full, setFull] = useState(false);
+  const [fontSize, setFontSize] = useState({
+    "--e-font-size": "calc(1rem + 0px )",
+  });
 
   const [code, setCode, fsource] = useCode();
 
   const { projectId } = useParams();
 
   useEffect(() => console.log(projectId), []);
+
+  /* Resizable Window logic */
 
   const handleWindowMouseMove = useCallback((event) => {
     /* Calculate new width */
@@ -44,10 +49,6 @@ const EditorPage = () => {
     window.removeEventListener("mousemove", handleWindowMouseMove);
   }
 
-  const [fontSize, setFontSize] = useState({ "--width": "1rem" });
-  // function handleFontChange(size){
-  //   set
-  // }
   async function handleSave() {
     try {
       const res = await updateOneProjectCode(code, projectId);
@@ -76,7 +77,11 @@ const EditorPage = () => {
 
   return (
     <div className="editor-container">
-      <NavBar full={() => setFull(!full)} onSave={handleSave} />
+      <NavBar
+        full={() => setFull(!full)}
+        onSave={handleSave}
+        setFontSize={setFontSize}
+      />
       {/* Pannel 1 */}
       <div
         ref={editorRef}
@@ -107,14 +112,15 @@ const EditorPage = () => {
         </ul>
 
         {/* Editor */}
-        <div className="test">
-          <EditorView
-            // className="test"
-            code={code}
-            setCode={setCode}
-            selected={currentView}
-          />
-        </div>
+        {/* <div className="test"> */}
+        <EditorView
+          // className="test"
+          code={code}
+          setCode={setCode}
+          selected={currentView}
+          style={fontSize}
+        />
+        {/* </div> */}
       </div>
       {/* divider between pannels */}
       <div

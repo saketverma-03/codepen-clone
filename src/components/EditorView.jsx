@@ -5,7 +5,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import "./scss/editorView.scss";
 
 /* Returs codeeditor depending on selected value */
-const EditorView = ({ code, setCode, selected }) => {
+const EditorView = ({ code, setCode, selected, ...rest }) => {
   const handleChange = (lang) => (e) => {
     setCode({ ...code, [lang]: e });
   };
@@ -20,6 +20,7 @@ const EditorView = ({ code, setCode, selected }) => {
           extensions={[html()]}
           className="editor-view"
           onChange={handleChange("html")}
+          {...rest}
         />
       </>
     );
@@ -32,6 +33,7 @@ const EditorView = ({ code, setCode, selected }) => {
         extensions={[css()]}
         className="editor-view"
         onChange={handleChange("css")}
+        {...rest}
       />
     );
 
@@ -44,6 +46,7 @@ const EditorView = ({ code, setCode, selected }) => {
         extensions={[javascript()]}
         className="editor-view"
         onChange={handleChange("javascript")}
+        {...rest}
       />
     );
 };
