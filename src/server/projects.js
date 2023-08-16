@@ -59,3 +59,14 @@ export async function updateOneProjectCode(data, id) {
   const res = await axios(params);
   return { data: res.data, message: res.message };
 }
+export async function deleteOneProject(id) {
+  const params = {
+    method: "delete",
+    url: `${basturl}/projects/deleteOne/${id}`,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const res = await axios(params);
+  return { message: res.data.message, res: res };
+}

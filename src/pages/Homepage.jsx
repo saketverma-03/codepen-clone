@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuthantication from "../hooks/useAuthantication";
 import {
   createProject,
+  deleteOneProject,
   getAllProjects,
   getOneProject,
 } from "../server/projects";
@@ -32,16 +33,17 @@ function Homepage() {
   useEffect(() => {
     getALl();
   }, []);
-  // useEffect(async () => {
-
-  //   })();
-  // }, []);
 
   function Logout() {
     logout();
     nav("../");
   }
 
+  function removeOneProjectBuId(id) {
+    const newProjects = projects.filter((item) => item.id !== id);
+    console.log(newProjects);
+    setProjects(newProjects);
+  }
   return (
     <>
       <CreateProjectForm hidden={{ get: formHidden, set: setFormHidden }} />
@@ -69,6 +71,7 @@ function Homepage() {
                 id={project.id}
                 title={project.title}
                 discription={project.discription}
+                removeProjects={removeOneProjectBuId}
               />
             );
           })}
@@ -80,18 +83,30 @@ function Homepage() {
 
 export default Homepage;
 
-function ProjectCard({ id, title, discription }) {
+function ProjectCard({ id, title, discription, removeProjects }) {
+  async function handleDelete(id) {
+    try {
+      const res = await deleteOneProject(id);
+      // remove that from state]
+      removeProjects(id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
-    <Link to={`../editor/${id}`}>
-      <div className="card">
+    <div className="card">
+      <Link to={`../editor/${id}`}>
         <h2>{title}</h2>
-        <span></span>
-        <p>{discription}</p>
-        <div className="footer">
-          <button className="delete">Delete</button>
-        </div>
+      </Link>
+      <span></span>
+      <p>{discription}</p>
+      <div className="footer">
+        <button onClick={() => handleDelete(id)} className="delete">
+          Delete
+        </button>
       </div>
-    </Link>
+    </div>
   );
 }
 
