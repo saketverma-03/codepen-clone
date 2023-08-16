@@ -8,7 +8,6 @@ import {
   getOneProject,
 } from "../server/projects";
 import { logout, test } from "../server/users";
-import "./scss/Homepage.scss";
 
 function getProjectList() {
   // getOneProject()
@@ -98,9 +97,9 @@ function ProjectCard({ id, title, discription, removeProjects }) {
     <div className="card">
       <Link to={`../editor/${id}`}>
         <h2>{title}</h2>
+        <span></span>
+        <p className="disc">{discription}</p>
       </Link>
-      <span></span>
-      <p>{discription}</p>
       <div className="footer">
         <button onClick={() => handleDelete(id)} className="delete">
           Delete

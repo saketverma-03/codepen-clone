@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BsArrowsFullscreen } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import "./scss/navbar.scss";
+// import "./scss/navbar.scss";
 function NavBar({ full, onSave, setFontSize }) {
   const nav = useNavigate();
   const [size, setSize] = useState(0);

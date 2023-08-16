@@ -2,7 +2,7 @@ import { css } from "@codemirror/lang-css";
 import { html } from "@codemirror/lang-html";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
-import "./scss/editorView.scss";
+// import "./scss/editorView.scss";
 
 /* Returs codeeditor depending on selected value */
 const EditorView = ({ code, setCode, selected, ...rest }) => {

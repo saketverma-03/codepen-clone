@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createUser } from "../server/users";
-import "./scss/userForm.scss";
+// import "./scss/userForm.scss";
 
 function SigupForm(params) {
   const [inputs, setInputs] = useState({

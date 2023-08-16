@@ -4,7 +4,7 @@ import LoginForm from "../components/LoginForm";
 import SigupForm from "../components/SignupForm";
 import useAuthantication from "../hooks/useAuthantication";
 import { isAuthanticated } from "../server/util";
-import "./scss/loginPage.scss";
+
 function LoginPage() {
   const [tab, setTab] = useState("Login");
   const [user] = useAuthantication();

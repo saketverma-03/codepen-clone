@@ -7,7 +7,6 @@ import useCode from "../hooks/useCode";
 import { useParams } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { getOneProject, updateOneProjectCode } from "../server/projects";
-import "./scss/editorPage.scss";
 
 const EditorPage = () => {
   const handleRef = useRef(null);
