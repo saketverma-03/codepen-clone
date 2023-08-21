@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { createUser } from "../server/users";
 // import "./scss/userForm.scss";
 
@@ -9,8 +10,16 @@ function SigupForm(params) {
   });
   function handleSubmit(e) {
     e.preventDefault();
-    console.table(inputs);
-    createUser(inputs).catch((e) => console.log(e.response.data.message));
+
+    try {
+      toast.promise(createUser(inputs), {
+        pending: "creating user",
+        success: "Created Successfully, pleas login know",
+        error: "opps something went wrong",
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   const handleChange = (type) => (e) => {

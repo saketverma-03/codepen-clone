@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useAuthantication from "../hooks/useAuthantication";
+
 import {
   createProject,
   deleteOneProject,
@@ -16,7 +18,7 @@ function getProjectList() {
 function Homepage() {
   const [formHidden, setFormHidden] = useState(true);
   const [projects, setProjects] = useState([]);
-  const [user] = useAuthantication();
+  // const [user] = useAuthantication();
   const nav = useNavigate();
 
   const getALl = async () => {
@@ -24,6 +26,7 @@ function Homepage() {
       const res = await getAllProjects();
       // console.log(res.data.porjects);
       setProjects(res.data.projects);
+      // notify();
     } catch (e) {
       console.log(e);
     }

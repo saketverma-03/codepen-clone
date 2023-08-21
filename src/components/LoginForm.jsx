@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import useAuthantication from "../hooks/useAuthantication";
 import { userSignin } from "../server/users";
 import { authanticate } from "../server/util";
@@ -29,7 +30,11 @@ function LoginForm(params) {
   async function handleSubit(e) {
     e.preventDefault();
     try {
-      const res = await userSignin(inputs);
+      const res = await toast.promise(userSignin(inputs), {
+        pending: "signing up",
+        success: "signed up succfully",
+        error: "opps something went wrong please try later 🤯",
+      });
       const { data } = res;
       console.log("Data", data);
       authanticate(data);
