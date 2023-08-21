@@ -1,12 +1,12 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { authanticate } from "./util";
-const basturl = "http://localhost:3001/api/user/signup";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 axios.defaults.withCredentials = true;
 export async function createUser(userInfo) {
   const params = {
     method: "post",
-    url: "http://localhost:3001/api/user/signup",
+    url: `${baseUrl}/user/signup`,
     data: userInfo,
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export async function createUser(userInfo) {
 export async function userSignin(userInfo) {
   const requestProps = {
     method: "POST",
-    url: "http://localhost:3001/api/user/signin",
+    url: `${baseUrl}/user/signin`,
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": "true",
@@ -36,7 +36,7 @@ export async function userSignin(userInfo) {
 export async function test() {
   const requestProps = {
     method: "get",
-    url: "http://localhost:3001/api/user/test",
+    url: `${baseUrl}/user/test`,
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": "true",

@@ -1,4 +1,5 @@
-const basturl = "http://localhost:3001/api";
+// const baseUrl = "http://localhost:3001/api";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 import axios from "axios";
 axios.defaults.withCredentials = true;
 
@@ -6,7 +7,7 @@ axios.defaults.withCredentials = true;
 export async function createProject(id, project) {
   const params = {
     method: "post",
-    url: `${basturl}/projects/createOne`,
+    url: `${baseUrl}/projects/createOne`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -25,7 +26,7 @@ export async function createProject(id, project) {
 export async function getAllProjects(id) {
   const params = {
     method: "get",
-    url: `${basturl}/projects/getAll`,
+    url: `${baseUrl}/projects/getAll`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -38,7 +39,7 @@ export async function getAllProjects(id) {
 export async function getOneProject(id) {
   const params = {
     method: "get",
-    url: `${basturl}/projects/getOne/${id}`,
+    url: `${baseUrl}/projects/getOne/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -50,7 +51,7 @@ export async function getOneProject(id) {
 export async function updateOneProjectCode(data, id) {
   const params = {
     method: "put",
-    url: `${basturl}/projects/updateOne/code/${id}`,
+    url: `${baseUrl}/projects/updateOne/code/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -62,7 +63,7 @@ export async function updateOneProjectCode(data, id) {
 export async function deleteOneProject(id) {
   const params = {
     method: "delete",
-    url: `${basturl}/projects/deleteOne/${id}`,
+    url: `${baseUrl}/projects/deleteOne/${id}`,
     headers: {
       "Content-Type": "application/json",
     },
